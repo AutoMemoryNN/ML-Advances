@@ -1,0 +1,270 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+*.hypothesis_cache/
+.coverage
+.cache
+nosetests.xml
+pytest.xml
+.testmondata
+.kcov
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+docsrc/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# Pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case you need to ignore it, use the following line:
+#   Pipfile.lock
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# MkDocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# PyCharm
+#  User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/shelf
+.idea/modules.xml
+.idea/misc.xml
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/scala_compiler.xml
+.idea/kotlinc.xml
+.idea/runConfigurations/
+.idea/scratch/
+.idea/gradle.xml
+.idea/libraries/
+.idea/caches/
+.idea/assetWizard.xml
+.idea/tasks/
+.idea/encodings.xml
+.idea/jarRepositories.xml
+.idea/.name
+.idea/sonarIssues.xml
+.idea/coverage/
+
+#  Code style:
+.idea/codeStyles/
+.idea/codeStyles/Project.xml
+
+#  Jupyter Notebook:
+.idea/ipnb/
+
+#  JIRA:
+.idea/jira/
+
+#  Copyright:
+.idea/copyright/
+
+#  Java:
+.idea/jarRepositories.xml
+.idea/javaDependencies.xml
+
+#  Gradle:
+.idea/gradle.xml
+.idea/libraries/
+
+#  Android:
+.idea/android/
+
+#  Rails:
+.idea/rails/
+
+#  JavaScript:
+.idea/javascriptLibs/
+
+#  Python:
+.idea/python/
+
+#  Ruby:
+.idea/ruby/
+
+#  C++:
+.idea/clion/
+
+#  WebStorm
+.idea/webBrowsers.xml
+
+#  PhpStorm
+.idea/php/
+.idea/php.xml
+.idea/phpunit.xml
+.idea/phpunit_test_schema.xml
+
+# Remote tools
+.idea/remote-mapping.xml
+
+# File-based project:
+.idea/projectResources/
+.idea/projectView.xml
+
+# Dev kits:
+.idea/devKits.xml
+
+# JavaScript & PHP:
+.idea/jsLibraryMappings.xml
+.idea/php.xml
+.idea/phpunit.xml
+
+# Jupyter Notebooks:
+.idea/notebooks.xml
+
+# WebStorm:
+.idea/webTypes/
+
+# Clion:
+.idea/.idea/
+
+# Rider:
+.idea/rider/
+
+# License:
+.idea/license/
+
+# VS Code:
+.idea/vscode/
+.idea/.vscode/
+
+# CMake
+CMakeLists.txt.user
+CMakeLists.txt.ide
+
+# Vim
+.idea/.idea
+
+# User dictionaries
+.idea/dictionaries
+
+# Others:
+.idea/watches.xml
+.idea/codeScenes.xml
+.idea/deployment.xml
+
+# Custom diff tools
+.idea/custom_diff_tool.xml
+.idea/custom_diff_tool/
+
+# SQL data sources
+.idea/sqlDataSources.xml
+
+# Additional settings
+.idea/scratch/
+.idea/shelf/
+
+# All other .idea directories in user home directory should be ignored
+.idea
+
+# External Libraries
+.idea/externalLibraries
