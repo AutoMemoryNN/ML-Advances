@@ -1,33 +1,50 @@
 import numpy as np
-import random as rd
-import scipy as sp
-
 
 class GenerateRegression:
     def __init__(self):
         pass
 
-    def generateDegree(self, degree, polyRange, n_samples, bias, noise, isAlwaysRandom, n_informative):
-        if isAlwaysRandom:
-            seed = int(degree * 2 + polyRange[0] * 3 + polyRange[
-                1] * 5 + n_samples * 7 + bias * 11 + noise * 13 + n_informative * 17)
-            np.random.seed(seed)
+    def generateDegree(self, degree, polyRange, n_samples, bias=0, noise=3, isReplicable=False, n_informative=0,
+                       seed=0):
+        """
+        Generates polynomial regression data.
 
-        X = np.array([])
-        Y = np.array([])
+        Parameters:
+        degree (int): Degree of the polynomial.
+        polyRange (tuple): Range of x values (start, end).
+        n_samples (int): Number of samples.
+        bias (float): Bias term in the polynomial.
+        noise (float): Standard deviation of the Gaussian noise.
+        isReplicable (bool): Whether to use a fixed seed for reproducibility.
+        n_informative (int): Number of informative samples.
+        seed (int): Seed for the random number generator.
 
-        startPoint = polyRange[0]
-        endPoint = polyRange[1]
-        jumps = (endPoint - startPoint) / n_samples
+        Returns:
+        tuple: Arrays of x and y values.
+        """
 
-        for j in range(n_samples - 1):
-            i = startPoint + (j * jumps)
-            x = np.random.normal(loc=i, scale=jumps, size=1)
+        if isReplicable:
+            seed_ = int(degree * 2 + n_samples * 3 + bias * 5 + noise * 7 + n_informative * 11 + seed * 13)
+            np.random.seed(seed_)
 
-            X = np.append(X, x[0])
+        start_point, end_point = polyRange
+        X = np.linspace(start_point, end_point, n_samples)
 
-        X = np.append(X, endPoint)
+        coefficients = np.random.uniform(low=-2, high=2, size=degree + 1)
+        coefficients = np.sort(coefficients)
+        coefficients[0] = bias
 
-        print(X)
+        X_eq = np.ones((n_samples, degree + 1))
+        for i in range(n_samples):
+            for d in range(1, degree + 1):
+                X_eq[i, d] = np.power(X[i], d)
+
+        Y_means = X_eq.dot(coefficients)
+        Y = np.random.normal(loc=Y_means, scale=noise, size=n_samples)
+
+        if 0 < n_informative <= n_samples:
+            indexes = np.random.choice(range(n_samples), n_informative, replace=False)
+            Y[indexes] = Y_means[indexes]
 
         return X, Y
+
