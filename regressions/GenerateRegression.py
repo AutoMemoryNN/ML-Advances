@@ -34,10 +34,7 @@ class GenerateRegression:
         coefficients = np.sort(coefficients)
         coefficients[0] = bias
 
-        X_eq = np.ones((n_samples, degree + 1))
-        for i in range(n_samples):
-            for d in range(1, degree + 1):
-                X_eq[i, d] = np.power(X[i], d)
+        X_eq = self.generateDesingMatrix(X, degree)
 
         Y_means = X_eq.dot(coefficients)
         Y = np.random.normal(loc=Y_means, scale=noise, size=n_samples)
@@ -47,4 +44,13 @@ class GenerateRegression:
             Y[indexes] = Y_means[indexes]
 
         return X, Y
+
+    def generateDesingMatrix(self, x_vector, degree):
+        n_samples = x_vector.shape[0]
+        designMatrix = np.ones((n_samples, degree + 1))
+        for i in range(n_samples):
+            for d in range(1, degree + 1):
+                designMatrix[i, d] = np.power(x_vector[i], d)
+
+        return designMatrix
 
