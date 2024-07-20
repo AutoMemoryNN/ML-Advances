@@ -30,7 +30,7 @@ class GenerateRegression:
         start_point, end_point = polyRange
         X = np.linspace(start_point, end_point, n_samples)
 
-        coefficients = np.random.uniform(low=-2, high=2, size=degree + 1)
+        coefficients = np.random.uniform(low=-1, high=1, size=degree + 1) / 2
         coefficients = np.sort(coefficients)
         coefficients[0] = bias
 
