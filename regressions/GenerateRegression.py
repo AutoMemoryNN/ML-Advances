@@ -21,7 +21,7 @@ class GenerateRegression:
         seed (int): Seed for the random number generator.
 
         Returns:
-        tuple: Arrays of x and y values.
+        tuple: Arrays of x and y values, the last parameter are the coefficients of the polynomial.
         """
 
         if isReplicable:
@@ -48,7 +48,7 @@ class GenerateRegression:
             indexes = np.random.choice(range(n_samples), n_informative, replace=False)
             y[indexes] = Y_means[indexes]
 
-        return x, y
+        return x, y, coefficients
 
     def generateDesingMatrix(self, x_vector, degree):
         """

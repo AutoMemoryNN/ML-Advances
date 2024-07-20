@@ -2,11 +2,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import GenerateRegression as gen
 
+generator = gen.GenerateRegression()
+
 
 def polynomialRegression(x, y, degree):
-    plt.subplots(figsize=(8, 5))
-    plt.scatter(x, y, marker='o', label='Original Data')
-
     y = y.reshape(-1, 1)
 
     x_b = generator.generateDesingMatrix(x, degree)
@@ -18,20 +17,42 @@ def polynomialRegression(x, y, degree):
 
     best_coefficients = pseudoInvMoorePenrose.dot(y)
 
-    x_new = np.linspace(x.min() * 1.2, x.max() * 1.2, 100).reshape(-1, 1)
+    x_new = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
 
     x_new_b = generator.generateDesingMatrix(x_new, degree)
 
     y_predict = x_new_b.dot(best_coefficients)
 
-    plt.plot(x_new, y_predict, color='red', linewidth=2, label='regression line')
-    plt.xlabel("Feature")
-    plt.ylabel("Objetive")
+    return x_new, y_predict, best_coefficients
+
+
+def initializePlot(title, figureSize=(8, 5), xLabel='Feature', yLabel='Objective'):
+    plt.figure(figsize=figureSize)
+    plt.title(title)
+    plt.xlabel(xLabel)
+    plt.ylabel(yLabel)
+
+
+def plotData(x, y, label, isScatter=False, isLine=False, color=None):
+    if isScatter:
+        plt.scatter(x, y, marker='o', label=label, color=color)
+    elif isLine:
+        plt.plot(x, y, linestyle='-', label=label, color=color)
     plt.legend()
+
+
+def main():
+    x, y, co = generator.generateDegree(5, (-6, 6), 75, 10, 5, 1, True, 1)
+    # x, y = generator.generateRandom((-20, 20), 100, 10, 0.5, True, 2)
+
+    initializePlot('Polynomial Regression')
+    plotData(x, y, 'Original Data', isScatter=True, color='blue')
+
+    x_new, y_predict, _ = polynomialRegression(x, y, 5)
+    plotData(x_new, y_predict, 'Regression Line', isLine=True, color='red')
+
     plt.show()
 
 
-generator = gen.GenerateRegression()
-x, y = generator.generateDegree(2, (-10, 10), 75, 10, 4, 5, True, 1)
-# x, y = generator.generateRandom((-20, 20), 100, 10, 0.5, True, 2)
-polynomialRegression(x, y, 2)
+if __name__ == '__main__':
+    main()
