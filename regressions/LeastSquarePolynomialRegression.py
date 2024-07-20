@@ -11,14 +11,14 @@ def polynomialRegression(x, y, degree):
 
     x_b = generator.generateDesingMatrix(x, degree)
 
-    # compute la Moore-Penrose pseudo-inverse
+    # compute Moore-Penrose pseudo-inverse
     XtX = x_b.T.dot(x_b)  # (X^T).dot(X)
     invXtX = np.linalg.inv(XtX)  # (X^T X)^-1
     pseudoInvMoorePenrose = invXtX.dot(x_b.T)  # (X^T X)^-1 X^T
 
     best_coefficients = pseudoInvMoorePenrose.dot(y)
 
-    x_new = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
+    x_new = np.linspace(x.min() * 1.2, x.max() * 1.2, 100).reshape(-1, 1)
 
     x_new_b = generator.generateDesingMatrix(x_new, degree)
 
@@ -32,6 +32,6 @@ def polynomialRegression(x, y, degree):
 
 
 generator = gen.GenerateRegression()
-x, y = generator.generateDegree(2, (-10, 10), 75, 10, 4, True, 5, 1)
-
-polynomialRegression(x, y, 10)
+x, y = generator.generateDegree(2, (-10, 10), 75, 10, 4, 5, True, 1)
+# x, y = generator.generateRandom((-20, 20), 100, 10, 0.5, True, 2)
+polynomialRegression(x, y, 2)
