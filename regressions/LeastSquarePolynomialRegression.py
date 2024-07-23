@@ -26,6 +26,29 @@ def polynomialRegression(x, y, degree):
     return x_new, y_predict, best_coefficients
 
 
+def errorFunction(y_true, y_pred):
+    if y_true.shape != y_pred.shape:
+        raise ValueError(f"y_true {y_true.shape} and y_pred {y_pred.shape} must have the same shape")
+    return np.log(0.5 * np.sum((y_true - y_pred) ** 2))  # natural logarithm for the error
+
+
+def evaluatePolynomial(x, coefficients):
+    x = np.asarray(x)
+    x_eq = generator.generateDesingMatrix(x, len(coefficients) - 1)
+    return x_eq.dot(coefficients)
+
+
+def findBestRegression(x, y):
+    errors = np.zeros((30,))  # TODO : max degree for seeking was set at 30
+    for i in range(30):
+        _, _, co = polynomialRegression(x, y, i)
+        errors[i] = errorFunction(y.reshape(-1, 1), evaluatePolynomial(x, co))
+
+    min_error = np.min(errors)
+    best_degree = np.argmin(errors)
+    return min_error, best_degree
+
+
 def initializePlot(title, figureSize=(8, 5), xLabel='Feature', yLabel='Objective'):
     plt.figure(figsize=figureSize)
     plt.title(title)
@@ -42,14 +65,21 @@ def plotData(x, y, label, isScatter=False, isLine=False, color=None):
 
 
 def main():
-    x, y, co = generator.generateDegree(5, (-6, 6), 75, 10, 5, 1, True, 1)
-    # x, y = generator.generateRandom((-20, 20), 100, 10, 0.5, True, 2)
+    # x, y = generator.generateDegree(3, (-5, 5), 100, 10, 1, 7,
+    #                                True, 2)
+    x, y = generator.generateRandom((-20, 20), 100, 10, 0.5, True, 2)
 
     initializePlot('Polynomial Regression')
     plotData(x, y, 'Original Data', isScatter=True, color='blue')
 
-    x_new, y_predict, _ = polynomialRegression(x, y, 5)
+    err, degree = findBestRegression(x, y)
+
+    print(f'Error: {err}', degree)
+
+    x_new, y_predict, y_predict_co = polynomialRegression(x, y, degree)
     plotData(x_new, y_predict, 'Regression Line', isLine=True, color='red')
+
+    plt.text(2, 2, err)
 
     plt.show()
 

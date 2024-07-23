@@ -48,7 +48,7 @@ class GenerateRegression:
             indexes = np.random.choice(range(n_samples), n_informative, replace=False)
             y[indexes] = Y_means[indexes]
 
-        return x, y, coefficients
+        return x, y
 
     def generateDesingMatrix(self, x_vector, degree):
         """
