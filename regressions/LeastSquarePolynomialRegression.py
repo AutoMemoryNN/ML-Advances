@@ -5,17 +5,27 @@ import GenerateRegression as gen
 generator = gen.GenerateRegression()
 
 
-def polynomialRegression(x, y, degree):
+# TODO : this function can be generalize to "linear regression"
+def polynomialRegression(x, y, degree, regularizationCoefficient=0.0):
     y = y.reshape(-1, 1)
+
+    best_coefficients = None
 
     x_b = generator.generateDesingMatrix(x, degree)
 
-    # compute Moore-Penrose pseudo-inverse
-    XtX = x_b.T.dot(x_b)  # (X^T).dot(X)
-    invXtX = np.linalg.inv(XtX)  # (X^T X)^-1
-    pseudoInvMoorePenrose = invXtX.dot(x_b.T)  # (X^T X)^-1 X^T
+    if regularizationCoefficient != 0.0:
+        XtX = x_b.T.dot(x_b)  # (X^T).dot(X)
+        regularizationCoefficientI = regularizationCoefficient * (np.identity(x_b.shape[1]))  # λ I
+        invXtXRegularized = np.linalg.inv(np.add(XtX, regularizationCoefficientI))  # (X^T X + λ I)^-1
+        pseudoInvMoorePenroseFitted = invXtXRegularized.dot(x_b.T)  # (X^T X + λ I)^-1 X^T
+        best_coefficients = pseudoInvMoorePenroseFitted.dot(y)
 
-    best_coefficients = pseudoInvMoorePenrose.dot(y)
+    else:
+        # compute Moore-Penrose pseudo-inverse
+        XtX = x_b.T.dot(x_b)  # (X^T).dot(X)
+        invXtX = np.linalg.inv(XtX)  # (X^T X)^-1
+        pseudoInvMoorePenrose = invXtX.dot(x_b.T)  # (X^T X)^-1 X^T
+        best_coefficients = pseudoInvMoorePenrose.dot(y)
 
     x_new = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
 
@@ -38,10 +48,10 @@ def evaluatePolynomial(x, coefficients):
     return x_eq.dot(coefficients)
 
 
-def findBestRegression(x, y):
+def findBestRegression(x, y, regularizationCoefficient=0.0):
     errors = np.zeros((30,))  # TODO : max degree for seeking was set at 30
     for i in range(30):
-        _, _, co = polynomialRegression(x, y, i)
+        _, _, co = polynomialRegression(x, y, i, regularizationCoefficient)
         errors[i] = errorFunction(y.reshape(-1, 1), evaluatePolynomial(x, co))
 
     min_error = np.min(errors)
@@ -72,7 +82,7 @@ def main():
     initializePlot('Polynomial Regression')
     plotData(x, y, 'Original Data', isScatter=True, color='blue')
 
-    err, degree = findBestRegression(x, y)
+    err, degree = findBestRegression(x, y, -3)
 
     print(f'Error: {err}', degree)
 
