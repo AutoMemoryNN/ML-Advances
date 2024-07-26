@@ -5,13 +5,21 @@ import GenerateRegression as gen
 generator = gen.GenerateRegression()
 
 
-# TODO : this function can be generalize to "linear regression"
-def polynomialRegression(x, y, degree, regularizationCoefficient=0.0):
+def gaussianBasicFunction(x, s, miu):
+    return np.exp(-(((x - miu) / (2 * s)) ** 2))
+
+
+def linearRegression(x, y, degree=1, regularizationCoefficient=0.0, regressionType='Lineal'):
     y = y.reshape(-1, 1)
 
     best_coefficients = None
+    x_b = x_b = generator.generateDesingMatrix(x, 1)
 
-    x_b = generator.generateDesingMatrix(x, degree)
+    if regressionType == 'Polynomial':
+        x_b = generator.generateDesingMatrix(x, degree)
+    elif regressionType == 'Gaussian':
+        x_b = np.array([gaussianBasicFunction(x_i, 0.01, x_i) for x_i in x])[:,
+              np.newaxis]  # BAD, where can i get miu and s?
 
     if regularizationCoefficient != 0.0:
         XtX = x_b.T.dot(x_b)  # (X^T).dot(X)
@@ -29,11 +37,26 @@ def polynomialRegression(x, y, degree, regularizationCoefficient=0.0):
 
     x_new = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
 
-    x_new_b = generator.generateDesingMatrix(x_new, degree)
+    x_new_b = None
+    if regressionType == 'Polynomial':
+        x_new_b = generator.generateDesingMatrix(x_new, degree)
+    elif regressionType == 'Gaussian':
+        x_new_b = np.array([gaussianBasicFunction(x_i[0], 0.01, x_i[0]) for x_i in x_new])[:,
+                  np.newaxis]  # BAD, where can i get miu and s?
 
     y_predict = x_new_b.dot(best_coefficients)
 
+    print(y_predict)
+
     return x_new, y_predict, best_coefficients
+
+
+def polynomialRegression(x, y, degree, regularizationCoefficient=0.0):
+    return linearRegression(x, y, degree, regularizationCoefficient, regressionType='Polynomial')
+
+
+def gaussianRegression(x, y, degree, regularizationCoefficient=0.0):
+    return linearRegression(x, y, degree, regularizationCoefficient, regressionType='Gaussian')
 
 
 def errorFunction(y_true, y_pred):
@@ -48,7 +71,7 @@ def evaluatePolynomial(x, coefficients):
     return x_eq.dot(coefficients)
 
 
-def findBestRegression(x, y, regularizationCoefficient=0.0):
+def findBestPolynomialRegression(x, y, regularizationCoefficient=0.0):
     errors = np.zeros((30,))  # TODO : max degree for seeking was set at 30
     for i in range(30):
         _, _, co = polynomialRegression(x, y, i, regularizationCoefficient)
@@ -82,7 +105,7 @@ def main():
     initializePlot('Polynomial Regression')
     plotData(x, y, 'Original Data', isScatter=True, color='blue')
 
-    err, degree = findBestRegression(x, y, -3)
+    err, degree = findBestPolynomialRegression(x, y, -3)
 
     print(f'Error: {err}', degree)
 
