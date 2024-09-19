@@ -46,8 +46,6 @@ def linearRegression(x, y, degree=1, regularizationCoefficient=0.0, regressionTy
 
     y_predict = x_new_b.dot(best_coefficients)
 
-    print(y_predict)
-
     return x_new, y_predict, best_coefficients
 
 
