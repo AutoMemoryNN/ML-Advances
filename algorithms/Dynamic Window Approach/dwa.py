@@ -191,8 +191,8 @@ while (1):
     # We want to find the best benefit where we have a positive component for closeness to target,
     # and a negative component for closeness to obstacles, for each of a choice of possible actions
     bestBenefit = -100000
-    FORWARDWEIGHT = 20
-    OBSTACLEWEIGHT = 6666
+    FORWARDWEIGHT = 40
+    OBSTACLEWEIGHT = 666
 
     # Copy of barriers so we can predict their positions
     barrierscopy = copy.deepcopy(barriers)
