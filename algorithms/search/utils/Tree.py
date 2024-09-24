@@ -79,3 +79,22 @@ class Tree:
         :return: El string que representa los datos del nodo y sus hijos.
         """
         return f"{self.root} {self.children}"
+
+    def printTree(self, level=0):
+        """
+        Imprime el árbol de manera jerárquica con indentación adecuada.
+
+        :param level: El nivel actual del nodo (se usa para la indentación).
+        """
+        indent = " " * (level * 4)
+        print(f"{indent}{self.root}")
+        for child in self.children:
+            child.printTree(level + 1)
+
+    def __str__(self):
+        """
+        Representación en string del árbol.
+
+        :return: El string que representa los datos del nodo y sus hijos.
+        """
+        return f"{self.root} {self.children}"
